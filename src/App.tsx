@@ -1,5 +1,6 @@
 import { Link, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
+import PodcastDetail from "./pages/PodcastDetail";
 
 const App = () => {
   return (
@@ -14,6 +15,8 @@ const App = () => {
       <main className="max-w-6xl mx-auto px-4 py-6">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/podcast/:podcastId" element={<PodcastDetail />} />
+          {/* <Route path="/podcast/:podcastId/episode/:episodeId" element={<EpisodeDetail />} /> */}
         </Routes>
       </main>
     </div>
