@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import type { PodcastDetail, Episode } from "../types/podcast";
 import { useGetPodcastDetails, useGetPodcastEpisodes } from "../hooks/usePodcasts";
 
 const PodcastDetail = () => {
@@ -6,14 +7,14 @@ const PodcastDetail = () => {
   const { data: podcastDetailsData } = useGetPodcastDetails(podcastId || "");
   const { data: episodesData } = useGetPodcastEpisodes(podcastId || "");
 
-  const podcast = podcastDetailsData?.results?.[0];
-  const image = podcast?.artworkUrl600;
-  const title = podcast?.collectionName || podcast?.trackName;
-  const author = podcast?.artistName;
-  const description = podcast?.description || podcast?.collectionName || "";
+  const podcast: PodcastDetail | undefined = podcastDetailsData?.results?.[0];
+  const image: string | undefined = podcast?.artworkUrl600;
+  const title: string | undefined = podcast?.collectionName || podcast?.trackName;
+  const author: string | undefined = podcast?.artistName;
+  const description: string = (podcast as any)?.description || podcast?.collectionName || "";
 
-  const episodes = Array.isArray(episodesData?.results)
-    ? episodesData.results.filter((ep: any) => ep.wrapperType === "podcastEpisode")
+  const episodes: Episode[] = Array.isArray(episodesData?.results)
+    ? episodesData.results.filter((ep: Episode) => ep.wrapperType === "podcastEpisode")
     : [];
 
   return (
@@ -45,7 +46,7 @@ const PodcastDetail = () => {
                   </td>
                 </tr>
               )}
-              {episodes.map((ep: any, idx: number) => (
+              {episodes.map((ep: Episode, idx: number) => (
                 <tr key={ep.trackId} className={`border-b ${idx % 2 === 1 ? "bg-gray-50" : ""}`}>
                   <td>
                     <Link

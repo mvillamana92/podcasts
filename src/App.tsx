@@ -2,6 +2,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import PodcastDetail from "./pages/PodcastDetail";
 import EpisodeDetail from "./pages/EpisodeDetail";
+import Loader from "./components/Loader";
 
 const App = () => {
   return (
@@ -11,6 +12,7 @@ const App = () => {
           <Link to="/" className="text-2xl font-bold">
             Podcaster
           </Link>
+          <Loader />
         </div>
       </header>
       <main className="max-w-6xl mx-auto px-4 py-6">

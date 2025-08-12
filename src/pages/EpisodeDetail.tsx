@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import type { PodcastDetail, Episode } from "../types/podcast";
 import { useGetPodcastDetails, useGetPodcastEpisodes } from "../hooks/usePodcasts";
 
 const EpisodeDetail = () => {
@@ -6,15 +7,15 @@ const EpisodeDetail = () => {
   const { data: podcastDetailsData } = useGetPodcastDetails(podcastId || "");
   const { data: episodesData } = useGetPodcastEpisodes(podcastId || "");
 
-  const podcast = podcastDetailsData?.results?.[0];
-  const image = podcast?.artworkUrl600;
-  const title = podcast?.collectionName || podcast?.trackName;
-  const author = podcast?.artistName;
+  const podcast: PodcastDetail | undefined = podcastDetailsData?.results?.[0];
+  const image: string | undefined = podcast?.artworkUrl600;
+  const title: string | undefined = podcast?.collectionName || podcast?.trackName;
+  const author: string | undefined = podcast?.artistName;
 
-  const episodes = Array.isArray(episodesData?.results)
-    ? episodesData.results.filter((ep: any) => ep.wrapperType === "podcastEpisode")
+  const episodes: Episode[] = Array.isArray(episodesData?.results)
+    ? episodesData.results.filter((ep: Episode) => ep.wrapperType === "podcastEpisode")
     : [];
-  const episode = episodes.find((ep: any) => ep.trackId?.toString() === episodeId);
+  const episode: Episode | undefined = episodes.find((ep: Episode) => ep.trackId?.toString() === episodeId);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">

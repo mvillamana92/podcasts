@@ -1,21 +1,20 @@
 import { useMemo, useState } from "react";
+import type { PodcastItem } from "../types/podcast";
 import { useGetTopPodcasts } from "../hooks/usePodcasts";
 import PodcastCard from "../components/PodcastCard";
 
 const Home = () => {
   const { data, isLoading } = useGetTopPodcasts();
 
-  const topPodcasts = data?.feed?.entry || [];
+  const topPodcasts: PodcastItem[] = data?.feed?.entry || [];
 
-  console.log(topPodcasts);
+  const [querySearch, setQuerySearch] = useState<string>("");
 
-  const [querySearch, setQuerySearch] = useState("");
-
-  const filteredPodcasts = useMemo(() => {
+  const filteredPodcasts: PodcastItem[] = useMemo(() => {
     const text = querySearch.toLowerCase();
-    return topPodcasts.filter((it: any) => {
-      const title = (it["im:name"]?.label || it.title || "").toLowerCase();
-      const author = (it["im:artist"]?.label || it.artistName || "").toLowerCase();
+    return topPodcasts.filter((it: PodcastItem) => {
+      const title = (it["im:name"]?.label || it.title?.label || "").toLowerCase();
+      const author = (it["im:artist"]?.label || "").toLowerCase();
       return title.includes(text) || author.includes(text);
     });
   }, [topPodcasts, querySearch]);
@@ -37,8 +36,8 @@ const Home = () => {
       {isLoading && <p>Cargando...</p>}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredPodcasts.map((item: any) => (
-          <PodcastCard key={item.id?.attributes?.["im:id"] || item.id} item={item} />
+        {filteredPodcasts.map((item: PodcastItem) => (
+          <PodcastCard key={item.id?.attributes?.["im:id"] || item.id?.label} item={item} />
         ))}
       </div>
     </div>
