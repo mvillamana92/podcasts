@@ -2,11 +2,12 @@ import { useParams } from "react-router-dom";
 import type { PodcastDetail, Episode } from "../types/podcast";
 import { useGetPodcastDetails, useGetPodcastEpisodes } from "../hooks/usePodcasts";
 import EpisodesTable from "../components/EpisodesTable";
+import Loader from "../components/Loader";
 
 const PodcastDetail = () => {
   const { podcastId } = useParams();
-  const { data: podcastDetailsData } = useGetPodcastDetails(podcastId || "");
-  const { data: episodesData } = useGetPodcastEpisodes(podcastId || "");
+  const { data: podcastDetailsData, isLoading: isLoadingDetails } = useGetPodcastDetails(podcastId || "");
+  const { data: episodesData, isLoading: isLoadingEpisodes } = useGetPodcastEpisodes(podcastId || "");
 
   const podcast: PodcastDetail | undefined = podcastDetailsData?.results?.[0];
   const image: string | undefined = podcast?.artworkUrl600;
@@ -17,6 +18,14 @@ const PodcastDetail = () => {
   const episodes: Episode[] = Array.isArray(episodesData?.results)
     ? episodesData.results.filter((ep: Episode) => ep.wrapperType === "podcastEpisode")
     : [];
+
+  if (isLoadingDetails || isLoadingEpisodes) {
+    return (
+      <div className="flex justify-center items-center min-h-[40vh]">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
