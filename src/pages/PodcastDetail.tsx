@@ -34,7 +34,10 @@ const PodcastDetail = () => {
           {image && <img src={image} alt={title} className="w-full rounded mb-3" />}
           <h3 className="font-bold mb-1">{title}</h3>
           <p className="text-sm text-gray-600 mb-2">{author}</p>
-          <div className="text-xs text-gray-500 whitespace-pre-line">{description}</div>
+          <div className="mt-4">
+            <h4 className="font-semibold mb-1">Description</h4>
+            <div className="text-xs text-gray-500 whitespace-pre-line">{description}</div>
+          </div>
         </div>
       </aside>
       <section className="md:col-span-3">
