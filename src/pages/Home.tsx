@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import type { PodcastItem } from "../types/podcast";
 import { useGetTopPodcasts } from "../hooks/usePodcasts";
 import PodcastCard from "../components/PodcastCard";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const { data, isLoading } = useGetTopPodcasts();
@@ -33,7 +34,11 @@ const Home = () => {
           />
         </div>
       </div>
-      {isLoading && <p>Cargando...</p>}
+      {isLoading && (
+        <div className="flex justify-center items-center min-h-[40vh]">
+          <Loader />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredPodcasts.map((item: PodcastItem) => (
