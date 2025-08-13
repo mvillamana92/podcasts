@@ -1,7 +1,7 @@
 export const TOP_PODCASTS_URL = "https://itunes.apple.com/us/rss/toppodcasts/limit=100/genre=1310/json";
 export const PODCAST_DETAILS_URL = "https://itunes.apple.com/lookup?id=";
 
-const PROXY_URL = "https://api.allorigins.win/raw?url=";
+const PROXY_URL = import.meta.env.DEV ? "https://api.allorigins.win/raw?url=" : "/api/proxy?url=";
 
 export const getTopPodcasts: () => Promise<any> = async () => {
   const response = await fetch(TOP_PODCASTS_URL);
