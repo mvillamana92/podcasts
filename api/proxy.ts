@@ -1,5 +1,7 @@
-export default async function handler(req, res) {
-  const { url } = req.query;
+import type { VercelRequest, VercelResponse } from "@vercel/node";
+
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const url = req.query.url as string;
   if (!url) {
     res.status(400).json({ error: "Missing url param" });
     return;
