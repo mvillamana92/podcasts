@@ -1,7 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPodcastDetails, getPodcastEpisodes, getTopPodcasts } from "../api/service";
+import {
+  getPodcastDetails,
+  getPodcastEpisodes,
+  getTopPodcasts,
+} from "../api/service";
 import { fetchTopPodcastsWithCache } from "../utils/podcastCache";
-import { GET_PODCAST_DETAILS, GET_PODCAST_EPISODES, GET_TOP_PODCASTS } from "./queryTypes";
+import {
+  GET_PODCAST_DETAILS,
+  GET_PODCAST_EPISODES,
+  GET_TOP_PODCASTS,
+} from "./queryTypes";
 
 export const useGetTopPodcasts = () => {
   return useQuery({
@@ -10,7 +18,7 @@ export const useGetTopPodcasts = () => {
   });
 };
 
-export const useGetPodcastDetails = (podcastId) => {
+export const useGetPodcastDetails = (podcastId: string) => {
   return useQuery({
     queryKey: [GET_PODCAST_DETAILS, podcastId],
     queryFn: async () => await getPodcastDetails(podcastId),
