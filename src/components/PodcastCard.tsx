@@ -10,13 +10,18 @@ const PodcastCard = ({ item }: Props) => {
   const img = item["im:image"]?.[2]?.label;
 
   return (
-    <Link to={`/podcast/${encodeURIComponent(id)}`} className="block p-3 bg-white rounded shadow-sm hover:shadow-md">
-      <div className="flex gap-3 items-center">
-        <img src={img} alt={title} className="w-16 h-16 object-cover rounded" />
-        <div>
-          <div className="font-semibold text-sm">{title}</div>
-          <div className="text-xs text-gray-500">{author}</div>
-        </div>
+    <Link
+      to={`/podcast/${encodeURIComponent(id)}`}
+      className="block p-6 bg-white rounded shadow-sm hover:shadow-md text-center"
+    >
+      <img
+        src={img}
+        alt={title}
+        className="w-24 h-24 object-cover rounded-full mx-auto mb-4 border border-gray-200 shadow"
+      />
+      <div className="font-semibold text-base mb-2">{title?.toUpperCase()}</div>
+      <div className="text-xs text-gray-500">
+        <span className="font-semibold">Author:</span> {author}
       </div>
     </Link>
   );
